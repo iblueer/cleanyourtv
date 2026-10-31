@@ -403,6 +403,8 @@ on that firmware, grouped and commented. These are starting points: comment out 
 
 Notes for models that have no tested list yet live in [`docs/devices/`](../docs/devices/):
 
+- [Skyworth 65G31](../docs/devices/skyworth-65g31.md) (`7S77_G31`, `sky848_9s60`, MStar `m7221`, Android 8.0 / API 26): factory-menu ADB path, the install-confirmation timeout that looks like `INSTALL_FAILED_USER_RESTRICTED`, Coocaa Home properties, five-app Launcher configuration, HDMI source routing and the G31-specific `persist.sys.bootvideo.time=0` ad setting; one-session notes, no reusable debloat list yet.
+
 - [Dangbei DBOX02 (Mars Pro 2)](../docs/devices/dangbei-dbox02.md), Android TV 11 `RTM9.241015.060`: single-session Home handover and ten package changes, the saved Wi-Fi check before disabling setupwraith, physical-remote and reboot checks, and closed debugging; no several-day debloat list.
 - [Xiaomi MiTV-MOSR1](../docs/devices/xiaomi-mitv-mosr1.md), Android TV 11, `RTT8.210119.001.1239`: short-session Home handover and package-persistence observations; PatchWall opens after reboot despite the Home preference, its input popup was retained, and the Home key helper costs held-volume repeat; physical Apps scancode and test limits; no several-day debloat list.
 - [Homatics Box R 4K Plus](../docs/devices/homatics-box-r-4k-plus.md), `SEI804HM` / `YYJ`, Android TV 14 build `8963`: paired encrypted ADB from a wired computer, standard Home handover, theme and physical-remote checks, package state retained after cold boot, and closing both debugging modes; single-session observations, no several-day debloat list.
