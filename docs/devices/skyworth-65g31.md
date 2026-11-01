@@ -261,6 +261,32 @@ input keyevent KEYCODE_HOME
 '
 ```
 
+### 真实遥控器 Home 键
+
+主题更新和 Launcher 重启不是电视整机重启，但都可能让 Coocaa 抢回 Home：
+
+- **更换主题**：主题同步会停止并重新启动 Launcher；主题文件本身不会自动修复原厂 Home 属性。
+- **重新安装 Launcher**：无障碍服务如果曾经绑定，可能被安装过程清掉。
+- **电视整机重启**：Coocaa 可能重写 `persist.service.homepage.*` / `persist.service.model.*`，也可能不绑定第三方无障碍服务。
+
+这台设备没有标准 `com.android.settings`、Accessibility 设置页面，工厂菜单也没有发现无障碍开关。虽然可以把 `HomeKeyService` 写入 `enabled_accessibility_services`，但酷开无障碍管理器没有真正绑定它；`dumpsys accessibility` 仍只显示原厂“便捷面板”。因此不能把 HomeKeyService 当作这台设备的可靠方案。
+
+当前可用的恢复命令是写入两组 Coocaa Home 属性，然后启动 Launcher：
+
+```bash
+adb shell '
+setprop persist.service.homepage.pkg com.coocaa.tvhome
+setprop persist.service.homepage.cls com.gathin.tvhome.MainActivity
+setprop persist.service.model.pkg com.coocaa.tvhome
+setprop persist.service.model.cls com.gathin.tvhome.MainActivity
+am start -n com.coocaa.tvhome/com.gathin.tvhome.MainActivity
+'
+```
+
+每次换主题、重新安装 Launcher 或整机重启后，都应按一次真实遥控器 Home 键验证。只用 `input keyevent KEYCODE_HOME` 不足以证明实体遥控器路径正常。
+
+如果主题工具需要适配这台电视，主题同步脚本应在重启 Launcher 后重新写入上面的两组属性；直接使用仓库默认的 `tools/theme.sh` 还会遇到包名差异，因为默认脚本写的是 `com.gathin.tvhome`，本机安装包是 `com.coocaa.tvhome`。
+
 ## 开机广告
 
 单独禁用 `com.tianci.ad` 不足以消除开机广告。广告还涉及 MStar/Coocaa 的 boot video 机制；同系列设备记录显示，开机视频由 `com.skyworth.tv` 播放，相关文件属于系统侧资源。
